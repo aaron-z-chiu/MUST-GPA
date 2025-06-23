@@ -6,7 +6,7 @@
 
 An unofficial GPA calculator for Macau University of Science and Technology (MUST) students. This tool aims to helps students calculate their Grade Point Average (GPA) and Major GPA.
 
-[Visit the website](https://aaron-z-chiu.github.io/GPA/) 
+[Visit the website](https://aaron-z-chiu.github.io/MUST-GPA/)
 
 ## Features
 
