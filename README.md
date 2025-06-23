@@ -30,9 +30,9 @@ Since WeMust login is required for accessing related documents, I cannot disclos
    - Mark as major course (default: checked)
 4. **View Results**: GPA calculations appear in real-time:
    - Individual course GP
-   - Semester GPA and Major GPA
-   - Year GPA and core course GPA
-   - Total GPA and core course GPA
+   - Semester GPA and Core course GPA
+   - Year GPA and Core course GPA
+   - Total GPA and Core course GPA
 
 ## Files
 
