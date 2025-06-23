@@ -31,8 +31,8 @@ Since WeMust login is required for accessing related documents, I cannot disclos
 4. **View Results**: GPA calculations appear in real-time:
    - Individual course GP
    - Semester GPA and Major GPA
-   - Year GPA and Major GPA
-   - Total GPA and Major GPA
+   - Year GPA and Core course GPA
+   - Total GPA and core course GPA
 
 ## Files
 
