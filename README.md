@@ -37,7 +37,7 @@ Due to the requirement of WeMust login for related documents, I cannot disclose 
 
 ## Files
 
-- `gpa_calculator.html` - Main HTML file
+- `index.html` - Main HTML file
 - `gpa_calculator.css` - Styling
 - `gpa_calculator.js` - Core functionality
 - `gpa_lang_en.js` - English language pack
