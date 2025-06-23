@@ -18,7 +18,7 @@
 
 ## 成绩等级系统
 
-因相关文档须登录WeMust账号，所以我无法在此透露详细打分标准。如您是澳科大学生/教职员，请参考[澳科大官网](https://student-wmweb.must.edu.mo/ebook/handbook/Books/Chapters-CHN/Undergraduate/UG-CH-4.pdf)。
+因查阅相关文档须登录WeMust账号，所以我无法在此透露详细打分标准。如您是澳科大学生/教职员，请参考[澳科大官网](https://student-wmweb.must.edu.mo/ebook/handbook/Books/Chapters-CHN/Undergraduate/UG-CH-4.pdf)。
 
 ## 使用方法
 
