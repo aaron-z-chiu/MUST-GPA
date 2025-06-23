@@ -6,7 +6,7 @@
 
 为澳门科技大学（MUST）学生设计的非官方GPA计算器。此工具旨在帮助学生计算平均绩点（GPA）和专业GPA。
 
-[访问该网站](https://aaron-z-chiu.github.io/GPA/) (如需使用简体中文版本，请在左上角选择相应语言)
+[访问该网站](https://aaron-z-chiu.github.io/MUST-GPA/) (如需使用简体中文版本，请在左上角选择语言)
 
 ## 功能特点
 
