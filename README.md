@@ -11,7 +11,7 @@ An unofficial GPA calculator for Macau University of Science and Technology (MUS
 - **Multi-language Support**: English, Simplified Chinese, and Traditional Chinese
 - **Flexible Academic Structure**: Add multiple academic years and semesters
 - **Real-time GPA Calculation**: Automatic calculation as you input grades
-- **Major Course Tracking**: Separate calculation for major courses
+- **Core Course Tracking**: Separate calculation for core courses
 - **Comprehensive Grade System**: Supports all MUST grade types including special grades (P, NP, DX, CT, X, S, W)
 - **Course GP Display**: Shows individual course grade points
 - **Responsive Design**: Works on desktop and mobile devices
