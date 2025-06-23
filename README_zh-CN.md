@@ -43,6 +43,7 @@
 - `gpa_lang_zh-CN.js` - 简体中文语言包
 - `gpa_lang_zh-TW.js` - 繁体中文语言包
 - `language-multilingual.svg` - 语言选择图标
+- `LICENSE` - MIT license 内容
 
 ## 技术细节
 
