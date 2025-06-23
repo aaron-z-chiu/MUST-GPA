@@ -6,7 +6,7 @@
 
 為澳門科技大學（MUST）學生設計的非官方GPA計算器。此工具旨在幫助學生計算平均績點（GPA）和專業GPA。
 
-[訪問該網站](https://aaron-z-chiu.github.io/GPA/) (如需使用繁體中文版本，請於左上角選擇語言)
+[訪問該網站](https://aaron-z-chiu.github.io/MUST-GPA/) (如需使用繁體中文版本，請於左上角選擇語言)
 
 ## 功能特點
 
