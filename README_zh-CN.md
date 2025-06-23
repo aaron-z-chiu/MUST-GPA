@@ -37,7 +37,7 @@
 
 ## 文件说明
 
-- `gpa_calculator.html` - 主HTML文件
+- `index.html` - 主HTML文件
 - `gpa_calculator.css` - 样式文件
 - `gpa_calculator.js` - 核心功能
 - `gpa_lang_en.js` - 英语语言包
