@@ -21,7 +21,7 @@ Since WeMust login is required for accessing related documents, I cannot disclos
 
 ## Usage
 
-1. **Add Academic Years**: Click "Add Academic Year" to create new academic periods
+1. **Add Academic Years**: Click "Add Year" to create new academic periods
 2. **Add Semesters**: Within each year, add semesters as needed
 3. **Input Course Information**:
    - Course name (optional)
