@@ -18,7 +18,7 @@
 
 ## 成績等級系統
 
-因相關文檔須登入WeMust帳號，所以我無法在此透露詳細打分標準。如您是澳科大學生/教職員，請參考[澳科大官網](https://student-wmweb.must.edu.mo/ebook/handbook/Books/Chapters-CHN/Undergraduate/UG-CH-4.pdf)。
+因查閱相關文檔須登入WeMust帳號，所以我無法在此透露詳細打分標準。如您是澳科大學生/教職員，請參考[澳科大官網](https://student-wmweb.must.edu.mo/ebook/handbook/Books/Chapters-CHN/Undergraduate/UG-CH-4.pdf)。
 
 ## 使用方法
 
@@ -37,7 +37,7 @@
 
 ## 檔案說明
 
-- `gpa_calculator.html` - 主HTML檔案
+- `index.html` - 主HTML檔案
 - `gpa_calculator.css` - 樣式檔案
 - `gpa_calculator.js` - 核心功能
 - `gpa_lang_en.js` - 英語語言包
