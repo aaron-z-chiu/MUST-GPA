@@ -43,6 +43,7 @@ Since WeMust login is required for accessing related documents, I cannot disclos
 - `gpa_lang_zh-CN.js` - Simplified Chinese language pack
 - `gpa_lang_zh-TW.js` - Traditional Chinese language pack
 - `language-multilingual.svg` - Language selection icon
+- `LICENSE` - MIT license content
 
 ## Technical Details
 
