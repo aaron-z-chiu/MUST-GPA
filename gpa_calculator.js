@@ -27,9 +27,15 @@ function addYearBlock() {
             <span class="year-gpa-info" style="margin-left:12px;color:#16a085;font-weight:bold;"></span>
         </div>
         <div class="semestersContainer"></div>
-        <button class="add-btn" type="button" onclick="addSemesterBlock(this)">${window.languagePack ? window.languagePack.addSemester : '添加学期'}</button>
+        <button class="add-btn" type="button" onclick="addSemesterBlock(this)">添加学期</button>
     `;
     yearsContainer.appendChild(yearBlock);
+    // 立即更新新添加的按钮文字和提示词
+    if (window.languagePack) {
+        yearBlock.querySelector('.add-btn').innerText = window.languagePack.addSemester;
+        yearBlock.querySelector('.remove-btn').innerText = window.languagePack.removeYear;
+        yearBlock.querySelector('input[name="year"]').placeholder = window.languagePack.yearPlaceholder;
+    }
     addSemesterBlock(yearBlock.querySelector('.add-btn'));
 }
 function addSemesterBlock(btn) {
@@ -51,17 +57,25 @@ function addSemesterBlock(btn) {
                     <th>课程名称</th>
                     <th>学分 <span style='color:#c0392b;font-weight:normal;font-size:12px;'>(默认值为3学分，如与实际不符，请根据课程实际学分进行修改)</span></th>
                     <th>成绩等级</th>
-                    <th>专业课程</th>
+                    <th>主修课程</th>
                     <th>GP</th>
                     <th>操作</th>
                 </tr>
             </thead>
             <tbody class="coursesBody"></tbody>
         </table>
-        <button class="add-btn" type="button" onclick="addCourseRow(this)">${window.languagePack ? window.languagePack.addCourse : '添加课程'}</button>
+        <button class="add-btn" type="button" onclick="addCourseRow(this)">添加课程</button>
     `;
     semestersContainer.appendChild(semesterBlock);
     addCourseRow(semesterBlock.querySelector('.add-btn'));
+    if (window.languagePack) {
+        semesterBlock.querySelector('.add-btn').innerText = window.languagePack.addCourse;
+        semesterBlock.querySelector('.remove-btn').innerText = window.languagePack.removeSemester;
+        semesterBlock.querySelector('input[name="semester"]').placeholder = window.languagePack.semesterPlaceholder;
+        semesterBlock.querySelectorAll('th').forEach((th, idx) => {
+            if (window.languagePack.tableHeaders[idx]) th.innerHTML = window.languagePack.tableHeaders[idx];
+        });
+    }
 }
 function addCourseRow(btn) {
     const tbody = btn.closest('.semester-block').querySelector('.coursesBody');
@@ -77,6 +91,12 @@ function addCourseRow(btn) {
     // Set default grade to '--' (not yet graded)
     row.querySelector('select[name="gradeLevel"]').value = '--';
     tbody.appendChild(row);
+    // 立即更新新添加的按钮文字和提示词
+    if (window.languagePack) {
+        row.querySelector('.remove-btn').innerText = window.languagePack.removeCourse;
+        row.querySelector('input[name="courseName"]').placeholder = window.languagePack.courseNamePlaceholder;
+        row.querySelector('input[name="credit"]').placeholder = window.languagePack.creditPlaceholder;
+    }
 }
 // Add one year and one semester by default
 addYearBlock();
