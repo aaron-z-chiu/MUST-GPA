@@ -14,7 +14,6 @@ An unofficial GPA calculator for Macau University of Science and Technology (MUS
 - **Core Course Tracking**: Separate calculation for core courses
 - **Comprehensive Grade System**: Supports all MUST grade types including special grades (P, NP, DX, CT, X, S, W)
 - **Course GP Display**: Shows individual course grade points
-- **Responsive Design**: Works on desktop and mobile devices
 
 ## Grade System
 
