@@ -25,6 +25,6 @@ window.languagePackAll['en'] = {
     yearDefault: 'Year ',
     semesterDefault: 'Semester ',
     totalTitle: 'Total',
-    ruleReference: 'For grade assessment rules, please refer to <a href="https://student-wmweb.must.edu.mo/ebook/handbook/Books/Chapters-CHN/Undergraduate/UG-CH-4.pdf" target="_blank">MUST website</a> (WeMust login required)',
+    ruleReference: 'For grade assessment rules, please refer to <a href="https://student-wmweb.must.edu.mo/ebook/handbook/Books/Chapters-EN/Undergraduate/UG-CH-4.pdf" target="_blank">MUST website</a> (WeMust login required)',
     copyright: 'Copyright © 2025 Aaron Tse-Cheng Chiu. All rights reserved.'
 }; 
