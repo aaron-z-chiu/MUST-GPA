@@ -18,7 +18,7 @@ An unofficial GPA calculator for Macau University of Science and Technology (MUS
 
 ## Grade System
 
-Due to the requirement of WeMust login for related documents, I cannot disclose detailed grading standards here. If you are a MUST student/faculty member, please refer to the [MUST website](https://student-wmweb.must.edu.mo/ebook/handbook/Books/Chapters-CHN/Undergraduate/UG-CH-4.pdf).
+Since WeMust login is required for accessing related documents, I cannot disclose detailed grading standards here. If you are a MUST student/faculty member, please refer to the [MUST website](https://student-wmweb.must.edu.mo/ebook/handbook/Books/Chapters-CHN/Undergraduate/UG-CH-4.pdf).
 
 ## Usage
 
