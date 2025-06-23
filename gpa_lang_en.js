@@ -1,6 +1,7 @@
 window.languagePackAll = window.languagePackAll || {};
 window.languagePackAll['en'] = {
     title: 'Macau University of Science and Technology GPA Calculator (Unofficial)',
+    computerRecommendation: 'Recommended to use on computer for optimal experience.',
     addYear: 'Add Year',
     addSemester: 'Add Semester',
     addCourse: 'Add Course',

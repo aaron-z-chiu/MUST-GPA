@@ -1,6 +1,7 @@
 window.languagePackAll = window.languagePackAll || {};
 window.languagePackAll['zh-TW'] = {
     title: '澳門科技大學GPA計算器（非官方）',
+    computerRecommendation: '建議使用電腦訪問本網站以獲得最佳體驗。',
     addYear: '新增學年',
     addSemester: '新增學期',
     addCourse: '新增課程',

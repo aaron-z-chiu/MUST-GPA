@@ -1,6 +1,7 @@
 window.languagePackAll = window.languagePackAll || {};
 window.languagePackAll['zh-CN'] = {
     title: '澳门科技大学GPA计算器（非官方）',
+    computerRecommendation: '建议使用电脑访问本网站以获得最佳体验。',
     addYear: '添加学年',
     addSemester: '添加学期',
     addCourse: '添加课程',

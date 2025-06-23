@@ -30,7 +30,7 @@ function addYearBlock() {
         <button class="add-btn" type="button" onclick="addSemesterBlock(this)">添加学期</button>
     `;
     yearsContainer.appendChild(yearBlock);
-    // 立即更新新添加的按钮文字和提示词
+    // Immediately update the text of newly added buttons and placeholders
     if (window.languagePack) {
         yearBlock.querySelector('.add-btn').innerText = window.languagePack.addSemester;
         yearBlock.querySelector('.remove-btn').innerText = window.languagePack.removeYear;
@@ -91,7 +91,7 @@ function addCourseRow(btn) {
     // Set default grade to '--' (not yet graded)
     row.querySelector('select[name="gradeLevel"]').value = '--';
     tbody.appendChild(row);
-    // 立即更新新添加的按钮文字和提示词
+    // Immediately update the text of newly added buttons and placeholders
     if (window.languagePack) {
         row.querySelector('.remove-btn').innerText = window.languagePack.removeCourse;
         row.querySelector('input[name="courseName"]').placeholder = window.languagePack.courseNamePlaceholder;
@@ -180,6 +180,7 @@ function setLanguage(lang) {
 function renderAllText() {
     // Update all static text in the page
     document.querySelector('h1').innerText = window.languagePack.title;
+    document.getElementById('computerRecommendation').innerText = window.languagePack.computerRecommendation;
     document.querySelectorAll('button.add-btn').forEach(btn => {
         if (!btn.closest('.year-block') && !btn.closest('.semester-block')) btn.innerText = window.languagePack.addYear;
         if (btn.closest('.year-block')) btn.innerText = window.languagePack.addSemester;
