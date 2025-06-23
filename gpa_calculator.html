@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MUST GPA Calculator (Unofficial)</title>
+    <link rel="stylesheet" href="gpa_calculator.css">
+</head>
+<body>
+    <div style="margin-bottom:18px;display:flex;align-items:center;gap:6px;">
+        <img id="langIcon" src="language-multilingual.svg" alt="language icon" style="width:18px;height:18px;vertical-align:middle;cursor:pointer;" />
+        <select id="languageSelect">
+            <option value="en" selected>English</option>
+            <option value="zh-CN">简体中文</option>
+            <option value="zh-TW">繁體中文</option>
+        </select>
+    </div>
+    <h1>Macau University of Science and Technology GPA Calculator (Unofficial)</h1>
+    <div class="output" id="totalGpaOutput" style="margin-bottom:12px;"></div>
+    <form id="gpaForm" onsubmit="return false;">
+        <div id="yearsContainer"></div>
+        <button class="add-btn" type="button" onclick="addYearBlock()">添加学年</button>
+    </form>
+    <script src="gpa_calculator.js"></script>
+    <div style="margin-top:24px;color:#888;font-size:14px;" id="ruleReference"></div>
+    <div style="color:#bbb;font-size:13px;margin-top:8px;" id="copyright"></div>
+</body>
+</html> 

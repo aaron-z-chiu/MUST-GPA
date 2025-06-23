@@ -1,0 +1,207 @@
+// GPA grade to point mapping
+const gradeMap = {
+    '--': null,
+    'A+': 4.0, 'A': 4.0, 'A-': 3.7,
+    'B+': 3.3, 'B': 3.0, 'B-': 2.7,
+    'C+': 2.3, 'C': 2.0, 'C-': 1.7,
+    'D+': 1.3, 'D': 1.0,
+    'F': 0.0, 'T': 0.0, 'AF': 0.0,
+    'P': null, 'NP': null, 'DX': null, 'CT': null, 'X': null, 'S': null, 'W': null
+};
+const gradeOptions = [
+    '--',
+    'A+', 'A', 'A-', 'B+', 'B', 'B-', 'C+', 'C', 'C-', 'D+', 'D', 'F', 'T', 'AF',
+    'P', 'NP', 'DX', 'CT', 'X', 'S', 'W'
+].map(g => `<option value="${g}">${g}</option>`).join('');
+let yearId = 0, semesterId = 0;
+function addYearBlock() {
+    yearId++;
+    const yearsContainer = document.getElementById('yearsContainer');
+    const yearBlock = document.createElement('div');
+    yearBlock.className = 'year-block';
+    yearBlock.setAttribute('data-year-id', yearId);
+    yearBlock.innerHTML = `
+        <div class="year-header">
+            <input type="text" name="year" placeholder="如\“2023-2024\”或自定义，可不填" style="width:240px;" oninput="autoCalculateGPA()">
+            <button type="button" class="remove-btn" onclick="this.parentElement.parentElement.remove(); autoCalculateGPA();">删除学年</button>
+            <span class="year-gpa-info" style="margin-left:12px;color:#16a085;font-weight:bold;"></span>
+        </div>
+        <div class="semestersContainer"></div>
+        <button class="add-btn" type="button" onclick="addSemesterBlock(this)">${window.languagePack ? window.languagePack.addSemester : '添加学期'}</button>
+    `;
+    yearsContainer.appendChild(yearBlock);
+    addSemesterBlock(yearBlock.querySelector('.add-btn'));
+}
+function addSemesterBlock(btn) {
+    semesterId++;
+    const yearBlock = btn.closest('.year-block');
+    const semestersContainer = yearBlock.querySelector('.semestersContainer');
+    const semesterBlock = document.createElement('div');
+    semesterBlock.className = 'semester-block';
+    semesterBlock.setAttribute('data-semester-id', semesterId);
+    semesterBlock.innerHTML = `
+        <div class="semester-header">
+            <input type="text" name="semester" placeholder="如\“2309\”或自定义，可不填" style="width:180px;" oninput="autoCalculateGPA()">
+            <button type="button" class="remove-btn" onclick="this.parentElement.parentElement.remove(); autoCalculateGPA();">删除学期</button>
+            <span class="semester-gpa-info" style="margin-left:12px;color:#2980b9;font-weight:bold;"></span>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>课程名称</th>
+                    <th>学分 <span style='color:#c0392b;font-weight:normal;font-size:12px;'>(默认值为3学分，如与实际不符，请根据课程实际学分进行修改)</span></th>
+                    <th>成绩等级</th>
+                    <th>专业课程</th>
+                    <th>GP</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody class="coursesBody"></tbody>
+        </table>
+        <button class="add-btn" type="button" onclick="addCourseRow(this)">${window.languagePack ? window.languagePack.addCourse : '添加课程'}</button>
+    `;
+    semestersContainer.appendChild(semesterBlock);
+    addCourseRow(semesterBlock.querySelector('.add-btn'));
+}
+function addCourseRow(btn) {
+    const tbody = btn.closest('.semester-block').querySelector('.coursesBody');
+    const row = document.createElement('tr');
+    row.innerHTML = `
+        <td><input type="text" name="courseName" placeholder="可不填" oninput="autoCalculateGPA()"></td>
+        <td><input type="number" name="credit" min="0" step="1" required value="3" oninput="autoCalculateGPA()"></td>
+        <td><select name="gradeLevel" onchange="autoCalculateGPA()">${gradeOptions}</select></td>
+        <td><input type="checkbox" name="isMajor" onchange="autoCalculateGPA()" checked></td>
+        <td class="course-gp">--</td>
+        <td><button type="button" class="remove-btn" onclick="this.parentElement.parentElement.remove(); autoCalculateGPA();">删除</button></td>
+    `;
+    // Set default grade to '--' (not yet graded)
+    row.querySelector('select[name="gradeLevel"]').value = '--';
+    tbody.appendChild(row);
+}
+// Add one year and one semester by default
+addYearBlock();
+function autoCalculateGPA() { calculateGPA(); }
+function calculateGPA() {
+    const yearBlocks = document.querySelectorAll('.year-block');
+    document.querySelectorAll('.year-gpa-info').forEach(e=>e.innerHTML='');
+    document.querySelectorAll('.semester-gpa-info').forEach(e=>e.innerHTML='');
+    let totalCredit = 0, totalPoint = 0;
+    let totalMajorCredit = 0, totalMajorPoint = 0;
+    yearBlocks.forEach((yearBlock, yIdx) => {
+        let year = yearBlock.querySelector('input[name="year"]').value.trim();
+        if (!year) year = window.languagePack.yearDefault + (yIdx+1);
+        let yearCredit = 0, yearPoint = 0;
+        let yearMajorCredit = 0, yearMajorPoint = 0;
+        const semesterBlocks = yearBlock.querySelectorAll('.semester-block');
+        semesterBlocks.forEach((semesterBlock, sIdx) => {
+            let semester = semesterBlock.querySelector('input[name="semester"]').value.trim();
+            if (!semester) semester = window.languagePack.semesterDefault + (sIdx+1);
+            let semCredit = 0, semPoint = 0;
+            let semMajorCredit = 0, semMajorPoint = 0;
+            const rows = semesterBlock.querySelectorAll('.coursesBody tr');
+            rows.forEach(row => {
+                const cells = row.querySelectorAll('td');
+                const credit = parseFloat(cells[1].querySelector('input').value);
+                const gradeLevel = cells[2].querySelector('select').value;
+                const isMajor = cells[3].querySelector('input').checked;
+                let courseGP = '--';
+                if (gradeLevel && gradeMap[gradeLevel] !== null && gradeMap[gradeLevel] !== undefined) {
+                    courseGP = gradeMap[gradeLevel].toFixed(2);
+                }
+                cells[4].innerText = courseGP;
+                // Only count grades with valid GPA points
+                if (!isNaN(credit) && gradeLevel && gradeMap[gradeLevel] !== null && gradeMap[gradeLevel] !== undefined) {
+                    const point = gradeMap[gradeLevel] * credit;
+                    semCredit += credit;
+                    semPoint += point;
+                    if (isMajor) {
+                        semMajorCredit += credit;
+                        semMajorPoint += point;
+                    }
+                }
+            });
+            const semGPA = semCredit ? (semPoint / semCredit).toFixed(2) : '--';
+            const semMajorGPA = semMajorCredit ? (semMajorPoint / semMajorCredit).toFixed(2) : '--';
+            semesterBlock.querySelector('.semester-gpa-info').innerHTML = `GPA: ${semGPA} / ${window.languagePack.majorGpaTitle}: ${semMajorGPA}`;
+            yearCredit += semCredit;
+            yearPoint += semPoint;
+            yearMajorCredit += semMajorCredit;
+            yearMajorPoint += semMajorPoint;
+            totalCredit += semCredit;
+            totalPoint += semPoint;
+            totalMajorCredit += semMajorCredit;
+            totalMajorPoint += semMajorPoint;
+        });
+        const yearGPA = yearCredit ? (yearPoint / yearCredit).toFixed(2) : '--';
+        const yearMajorGPA = yearMajorCredit ? (yearMajorPoint / yearMajorCredit).toFixed(2) : '--';
+        yearBlock.querySelector('.year-gpa-info').innerHTML = `GPA: ${yearGPA} / ${window.languagePack.majorGpaTitle}: ${yearMajorGPA}`;
+    });
+    const totalGPA = totalCredit ? (totalPoint / totalCredit).toFixed(2) : '--';
+    const totalMajorGPA = totalMajorCredit ? (totalMajorPoint / totalMajorCredit).toFixed(2) : '--';
+    document.getElementById('totalGpaOutput').innerHTML = `<span style="font-weight:bold;">GPA: ${totalGPA} / ${window.languagePack.majorGpaTitle}: ${totalMajorGPA}</span>`;
+}
+document.addEventListener('input', autoCalculateGPA);
+document.addEventListener('change', autoCalculateGPA);
+
+// Language pack loader
+function loadLanguagePack(lang, callback) {
+    const script = document.createElement('script');
+    script.src = `gpa_lang_${lang}.js`;
+    script.onload = callback;
+    document.head.appendChild(script);
+}
+
+function setLanguage(lang) {
+    window.languagePack = window.languagePackAll[lang];
+    renderAllText();
+    autoCalculateGPA();
+}
+
+function renderAllText() {
+    // Update all static text in the page
+    document.querySelector('h1').innerText = window.languagePack.title;
+    document.querySelectorAll('button.add-btn').forEach(btn => {
+        if (!btn.closest('.year-block') && !btn.closest('.semester-block')) btn.innerText = window.languagePack.addYear;
+        if (btn.closest('.year-block')) btn.innerText = window.languagePack.addSemester;
+        if (btn.closest('.semester-block')) btn.innerText = window.languagePack.addCourse;
+    });
+    document.querySelectorAll('th').forEach((th, idx) => {
+        if (window.languagePack.tableHeaders[idx]) th.innerHTML = window.languagePack.tableHeaders[idx];
+    });
+    document.querySelectorAll('.remove-btn').forEach(btn => {
+        if (btn.closest('.year-block')) btn.innerText = window.languagePack.removeYear;
+        if (btn.closest('.semester-block')) btn.innerText = window.languagePack.removeSemester;
+        if (btn.closest('tr')) btn.innerText = window.languagePack.removeCourse;
+    });
+    // Update all placeholders
+    document.querySelectorAll('input[name="courseName"]').forEach(input => {
+        input.placeholder = window.languagePack.courseNamePlaceholder;
+    });
+    document.querySelectorAll('input[name="year"]').forEach(input => {
+        input.placeholder = window.languagePack.yearPlaceholder;
+    });
+    document.querySelectorAll('input[name="semester"]').forEach(input => {
+        input.placeholder = window.languagePack.semesterPlaceholder;
+    });
+    document.querySelectorAll('input[name="credit"]').forEach(input => {
+        input.placeholder = window.languagePack.creditPlaceholder;
+    });
+    // Update bottom text
+    document.getElementById('ruleReference').innerHTML = window.languagePack.ruleReference;
+    document.getElementById('copyright').innerText = window.languagePack.copyright;
+    // GPA output
+    autoCalculateGPA();
+}
+
+document.getElementById('languageSelect').addEventListener('change', function() {
+    const lang = this.value;
+    loadLanguagePack(lang, function() {
+        setLanguage(lang);
+    });
+});
+
+// English by default
+window.languagePackAll = {};
+loadLanguagePack('en', function() {
+    setLanguage('en');
+}); 
