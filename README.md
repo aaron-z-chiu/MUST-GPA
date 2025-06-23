@@ -57,4 +57,8 @@ This is an unofficial tool created for educational purposes.
 
 This website was created in June 2025. The university's grading standards may have changed since then, and the author does not guarantee timely updates to reflect such changes. Please refer to the official MUST website for latest grade assessment rules and policies.
 
+The user shall bear full responsibility for all consequences arising from the misuse of this website (including but not limited to illegal activities). The author shall not be held liable under any circumstances.
 
+## Copyright
+
+Copyright © 2025 Aaron Tse-Cheng Chiu. All rights reserved.
