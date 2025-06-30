@@ -10,7 +10,7 @@ window.languagePackAll['zh-CN'] = {
     removeCourse: '删除',
     tableHeaders: [
         '课程名称',
-        '学分 <span style="color:#c0392b;font-weight:normal;font-size:12px;">（默认值为3学分，如与实际不符，请根据课程实际学分进行修改）</span>',
+        '学分 <span style="color:#c0392b;font-weight:normal;font-size:12px;">（默认3学分，请根据实际情况修改）</span>',
         '成绩等级',
         '专业课程',
         '绩点',
@@ -20,6 +20,7 @@ window.languagePackAll['zh-CN'] = {
     yearPlaceholder: '如"2023-2024"或自定义，可不填',
     semesterPlaceholder: '如"2309"或自定义，可不填',
     creditPlaceholder: '',
+    creditError: '请输入不小于0的数字',
     gpaOutputTitle: '总GPA',
     majorGpaTitle: '专业课程GPA',
     yearDefault: '学年',

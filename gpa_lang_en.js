@@ -10,7 +10,7 @@ window.languagePackAll['en'] = {
     removeCourse: 'Remove',
     tableHeaders: [
         'Course Name',
-        'Credit <span style="color:#c0392b;font-weight:normal;font-size:12px;">(Default: 3 credits. Please modify if different.)</span>',
+        'Credit <span style="color:#c0392b;font-weight:normal;font-size:12px;">(3 by default. Please adjust if necessary.)</span>',
         'Grade',
         'Core Course',
         'GP',
@@ -20,6 +20,7 @@ window.languagePackAll['en'] = {
     yearPlaceholder: 'e.g. 2023-2024 or custom, optional',
     semesterPlaceholder: 'e.g. 2309 or custom, optional',
     creditPlaceholder: '',
+    creditError: 'Please enter a number greater than or equal to 0.',
     gpaOutputTitle: 'Total GPA',
     majorGpaTitle: 'Core Course GPA',
     yearDefault: 'Year ',

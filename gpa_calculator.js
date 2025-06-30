@@ -23,11 +23,11 @@ function addYearBlock() {
     yearBlock.innerHTML = `
         <div class="year-header">
             <input type="text" name="year" placeholder="如\“2023-2024\”或自定义，可不填" style="width:240px;" oninput="autoCalculateGPA()">
-            <button type="button" class="remove-btn" onclick="this.parentElement.parentElement.remove(); autoCalculateGPA();">删除学年</button>
+            <button type="button" class="remove-btn" onclick="this.parentElement.parentElement.remove(); autoCalculateGPA();">Delete year</button>
             <span class="year-gpa-info" style="margin-left:12px;color:#16a085;font-weight:bold;"></span>
         </div>
         <div class="semestersContainer"></div>
-        <button class="add-btn" type="button" onclick="addSemesterBlock(this)">添加学期</button>
+        <button class="add-btn" type="button" onclick="addSemesterBlock(this)">Add semester</button>
     `;
     yearsContainer.appendChild(yearBlock);
     // Immediately update the text of newly added buttons and placeholders
@@ -48,23 +48,23 @@ function addSemesterBlock(btn) {
     semesterBlock.innerHTML = `
         <div class="semester-header">
             <input type="text" name="semester" placeholder="如\“2309\”或自定义，可不填" style="width:180px;" oninput="autoCalculateGPA()">
-            <button type="button" class="remove-btn" onclick="this.parentElement.parentElement.remove(); autoCalculateGPA();">删除学期</button>
+            <button type="button" class="remove-btn" onclick="this.parentElement.parentElement.remove(); autoCalculateGPA();">Delete semester</button>
             <span class="semester-gpa-info" style="margin-left:12px;color:#2980b9;font-weight:bold;"></span>
         </div>
         <table>
             <thead>
                 <tr>
-                    <th>课程名称</th>
-                    <th>学分 <span style='color:#c0392b;font-weight:normal;font-size:12px;'>(默认值为3学分，如与实际不符，请根据课程实际学分进行修改)</span></th>
-                    <th>成绩等级</th>
-                    <th>主修课程</th>
+                    <th>Course name</th>
+                    <th>Credit <span style='color:#c0392b;font-weight:normal;font-size:12px;'>(Default value is 3 credits, please modify if it does not match the actual course credit)</span></th>
+                    <th>Grade level</th>
+                    <th>Major course</th>
                     <th>GP</th>
-                    <th>操作</th>
+                    <th>Operation</th>
                 </tr>
             </thead>
             <tbody class="coursesBody"></tbody>
         </table>
-        <button class="add-btn" type="button" onclick="addCourseRow(this)">添加课程</button>
+        <button class="add-btn" type="button" onclick="addCourseRow(this)">Add course</button>
     `;
     semestersContainer.appendChild(semesterBlock);
     addCourseRow(semesterBlock.querySelector('.add-btn'));
@@ -86,7 +86,7 @@ function addCourseRow(btn) {
         <td><select name="gradeLevel" onchange="autoCalculateGPA()">${gradeOptions}</select></td>
         <td><input type="checkbox" name="isMajor" onchange="autoCalculateGPA()" checked></td>
         <td class="course-gp">--</td>
-        <td><button type="button" class="remove-btn" onclick="this.parentElement.parentElement.remove(); autoCalculateGPA();">删除</button></td>
+        <td><button type="button" class="remove-btn" onclick="this.parentElement.parentElement.remove(); autoCalculateGPA();">Delete</button></td>
     `;
     // Set default grade to '--' (not yet graded)
     row.querySelector('select[name="gradeLevel"]').value = '--';
@@ -107,6 +107,13 @@ function calculateGPA() {
     document.querySelectorAll('.semester-gpa-info').forEach(e=>e.innerHTML='');
     let totalCredit = 0, totalPoint = 0;
     let totalMajorCredit = 0, totalMajorPoint = 0;
+    // Clear all credit input error styles
+    document.querySelectorAll('input[name="credit"]').forEach(input => {
+        input.style.border = '';
+        if (input.parentNode.querySelector('.credit-error')) {
+            input.parentNode.querySelector('.credit-error').remove();
+        }
+    });
     yearBlocks.forEach((yearBlock, yIdx) => {
         let year = yearBlock.querySelector('input[name="year"]').value.trim();
         if (!year) year = window.languagePack.yearDefault + (yIdx+1);
@@ -121,7 +128,22 @@ function calculateGPA() {
             const rows = semesterBlock.querySelectorAll('.coursesBody tr');
             rows.forEach(row => {
                 const cells = row.querySelectorAll('td');
-                const credit = parseFloat(cells[1].querySelector('input').value);
+                const creditInput = cells[1].querySelector('input');
+                const credit = parseFloat(creditInput.value);
+                // Validate credit
+                if (!checkCreditLegal(credit)) {
+                    creditInput.style.border = '2px solid #e74c3c';
+                    if (!creditInput.parentNode.querySelector('.credit-error')) {
+                        const err = document.createElement('div');
+                        err.className = 'credit-error';
+                        err.style.color = '#e74c3c';
+                        err.style.fontSize = '12px';
+                        err.style.marginTop = '2px';
+                        err.style.lineHeight = '1.2';
+                        err.innerText = window.languagePack && window.languagePack.creditError ? window.languagePack.creditError : 'Please enter a valid number';
+                        creditInput.parentNode.appendChild(err);
+                    }
+                }
                 const gradeLevel = cells[2].querySelector('select').value;
                 const isMajor = cells[3].querySelector('input').checked;
                 let courseGP = '--';
@@ -225,4 +247,11 @@ document.getElementById('languageSelect').addEventListener('change', function() 
 window.languagePackAll = {};
 loadLanguagePack('en', function() {
     setLanguage('en');
-}); 
+});
+
+// Validate if credit is legal: must be a number greater than or equal to 0
+function checkCreditLegal(credit) {
+    if (typeof credit !== 'number' || isNaN(credit)) return false;
+    if (credit < 0) return false;
+    return true;
+} 
