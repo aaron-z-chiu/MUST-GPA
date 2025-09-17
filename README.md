@@ -64,4 +64,4 @@ The user shall bear full responsibility for all consequences arising from the mi
 
 ## Copyright
 
-Copyright © 2025 Aaron Tse-Cheng Chiu. All rights reserved.
+Copyright © 2025 [Aaron Tse-Cheng Chiu](zecqiu.com). All rights reserved.
