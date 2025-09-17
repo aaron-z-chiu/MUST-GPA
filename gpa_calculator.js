@@ -231,7 +231,7 @@ function renderAllText() {
     });
     // Update bottom text
     document.getElementById('ruleReference').innerHTML = window.languagePack.ruleReference;
-    document.getElementById('copyright').innerText = window.languagePack.copyright;
+    document.getElementById('copyright').inneHTML = window.languagePack.copyright;
     // GPA output
     autoCalculateGPA();
 }
