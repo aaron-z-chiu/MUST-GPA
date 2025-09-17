@@ -27,5 +27,5 @@ window.languagePackAll['zh-TW'] = {
     semesterDefault: '學期',
     totalTitle: '總計',
     ruleReference: '關於成績評定規則，請參考<a href="https://student-wmweb.must.edu.mo/ebook/handbook/Books/Chapters-CHN/Undergraduate/UG-CH-4.pdf" target="_blank">澳科大官網</a>（須登入WeMust帳號）',
-    copyright: '版權所有 © 2025 仇澤程 保留所有權利'
+    copyright: '版權所有 © 2025 <a href="https://zecqiu.com" target="_blank">仇澤程</a> 保留所有權利'
 }; 
