@@ -16,6 +16,11 @@
     </div>
     <h1>Macau University of Science and Technology GPA Calculator (Unofficial)</h1>
     <div id="computerRecommendation" style="margin-bottom:12px;color:#666;font-size:14px;font-style:italic;"></div>
+    <div class="data-actions">
+        <button id="exportDataBtn" class="data-btn" type="button" onclick="exportGpaData()">Export JSON</button>
+        <button id="importDataBtn" class="data-btn" type="button" onclick="triggerImportGpaData()">Import JSON</button>
+        <input id="importDataInput" type="file" accept="application/json,.json" onchange="importGpaDataFromFile(this)" hidden>
+    </div>
     <div class="output" id="totalGpaOutput" style="margin-bottom:12px;"></div>
     <form id="gpaForm" onsubmit="return false;">
         <div id="yearsContainer"></div>

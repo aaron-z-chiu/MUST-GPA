@@ -8,6 +8,11 @@ window.languagePackAll['en'] = {
     removeYear: 'Remove Year',
     removeSemester: 'Remove Semester',
     removeCourse: 'Remove',
+    exportData: 'Export JSON',
+    importData: 'Import JSON',
+    importSuccess: 'Imported successfully.',
+    importInvalidFile: 'Unable to import this JSON file. Please check the file format.',
+    exportFileName: 'must-gpa',
     tableHeaders: [
         'Course Name',
         'Credit <span style="color:#c0392b;font-weight:normal;font-size:12px;">(3 by default. Please adjust if necessary.)</span>',

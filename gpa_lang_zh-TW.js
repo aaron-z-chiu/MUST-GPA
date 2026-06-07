@@ -8,6 +8,11 @@ window.languagePackAll['zh-TW'] = {
     removeYear: '刪除學年',
     removeSemester: '刪除學期',
     removeCourse: '刪除',
+    exportData: '匯出JSON',
+    importData: '匯入JSON',
+    importSuccess: '匯入成功。',
+    importInvalidFile: '無法匯入此JSON檔案，請檢查檔案格式。',
+    exportFileName: '澳科大GPA',
     tableHeaders: [
         '課程名稱',
         '學分 <span style="color:#c0392b;font-weight:normal;font-size:12px;">（預設3學分，請依實際情況修改）</span>',

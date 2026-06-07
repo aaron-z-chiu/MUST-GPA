@@ -13,6 +13,7 @@ const gradeOptions = [
     'A+', 'A', 'A-', 'B+', 'B', 'B-', 'C+', 'C', 'C-', 'D+', 'D', 'F', 'T', 'AF',
     'P', 'NP', 'DX', 'CT', 'X', 'S', 'W'
 ].map(g => `<option value="${g}">${g}</option>`).join('');
+const exportSchemaVersion = 1;
 let yearId = 0, semesterId = 0;
 function addYearBlock() {
     yearId++;
@@ -101,6 +102,107 @@ function addCourseRow(btn) {
 // Add one year and one semester by default
 addYearBlock();
 function autoCalculateGPA() { calculateGPA(); }
+function collectGpaData() {
+    const years = Array.from(document.querySelectorAll('.year-block')).map(yearBlock => ({
+        year: yearBlock.querySelector('input[name="year"]').value,
+        semesters: Array.from(yearBlock.querySelectorAll('.semester-block')).map(semesterBlock => ({
+            semester: semesterBlock.querySelector('input[name="semester"]').value,
+            courses: Array.from(semesterBlock.querySelectorAll('.coursesBody tr')).map(row => ({
+                courseName: row.querySelector('input[name="courseName"]').value,
+                credit: row.querySelector('input[name="credit"]').value,
+                gradeLevel: row.querySelector('select[name="gradeLevel"]').value,
+                isMajor: row.querySelector('input[name="isMajor"]').checked
+            }))
+        }))
+    }));
+    return {
+        version: exportSchemaVersion,
+        exportedAt: new Date().toISOString(),
+        years
+    };
+}
+
+function exportGpaData() {
+    const data = collectGpaData();
+    const json = JSON.stringify(data, null, 2);
+    const blob = new Blob([json], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    const dateText = new Date().toISOString().slice(0, 10);
+    const fileNameBase = window.languagePack && window.languagePack.exportFileName ? window.languagePack.exportFileName : 'must-gpa';
+    link.href = url;
+    link.download = `${fileNameBase}-${dateText}.json`;
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    URL.revokeObjectURL(url);
+}
+
+function triggerImportGpaData() {
+    const input = document.getElementById('importDataInput');
+    input.value = '';
+    input.click();
+}
+
+function importGpaDataFromFile(input) {
+    const file = input.files && input.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function(event) {
+        try {
+            const data = JSON.parse(event.target.result);
+            applyImportedGpaData(data);
+            alert(window.languagePack && window.languagePack.importSuccess ? window.languagePack.importSuccess : 'Imported successfully.');
+        } catch (error) {
+            alert(window.languagePack && window.languagePack.importInvalidFile ? window.languagePack.importInvalidFile : 'Unable to import this JSON file. Please check the file format.');
+        } finally {
+            input.value = '';
+        }
+    };
+    reader.onerror = function() {
+        alert(window.languagePack && window.languagePack.importInvalidFile ? window.languagePack.importInvalidFile : 'Unable to import this JSON file. Please check the file format.');
+        input.value = '';
+    };
+    reader.readAsText(file);
+}
+
+function applyImportedGpaData(data) {
+    if (!data || !Array.isArray(data.years)) {
+        throw new Error('Invalid GPA data');
+    }
+    const yearsContainer = document.getElementById('yearsContainer');
+    yearsContainer.innerHTML = '';
+    data.years.forEach(yearData => {
+        addYearBlock();
+        const yearBlock = yearsContainer.lastElementChild;
+        yearBlock.querySelector('input[name="year"]').value = typeof yearData.year === 'string' ? yearData.year : '';
+        const semestersContainer = yearBlock.querySelector('.semestersContainer');
+        semestersContainer.innerHTML = '';
+        const semesters = Array.isArray(yearData.semesters) ? yearData.semesters : [];
+        semesters.forEach(semesterData => {
+            addSemesterBlock(yearBlock.querySelector('.add-btn'));
+            const semesterBlock = semestersContainer.lastElementChild;
+            semesterBlock.querySelector('input[name="semester"]').value = typeof semesterData.semester === 'string' ? semesterData.semester : '';
+            const tbody = semesterBlock.querySelector('.coursesBody');
+            tbody.innerHTML = '';
+            const courses = Array.isArray(semesterData.courses) ? semesterData.courses : [];
+            courses.forEach(courseData => {
+                addCourseRow(semesterBlock.querySelector('.add-btn'));
+                const row = tbody.lastElementChild;
+                row.querySelector('input[name="courseName"]').value = typeof courseData.courseName === 'string' ? courseData.courseName : '';
+                row.querySelector('input[name="credit"]').value = courseData.credit !== undefined && courseData.credit !== null ? String(courseData.credit) : '';
+                row.querySelector('select[name="gradeLevel"]').value = gradeMap.hasOwnProperty(courseData.gradeLevel) ? courseData.gradeLevel : '--';
+                row.querySelector('input[name="isMajor"]').checked = courseData.isMajor !== false;
+            });
+        });
+    });
+    if (!data.years.length) {
+        addYearBlock();
+    }
+    renderAllText();
+    autoCalculateGPA();
+}
+
 function calculateGPA() {
     const yearBlocks = document.querySelectorAll('.year-block');
     document.querySelectorAll('.year-gpa-info').forEach(e=>e.innerHTML='');
@@ -203,6 +305,8 @@ function renderAllText() {
     // Update all static text in the page
     document.querySelector('h1').innerText = window.languagePack.title;
     document.getElementById('computerRecommendation').innerText = window.languagePack.computerRecommendation;
+    document.getElementById('exportDataBtn').innerText = window.languagePack.exportData;
+    document.getElementById('importDataBtn').innerText = window.languagePack.importData;
     document.querySelectorAll('button.add-btn').forEach(btn => {
         if (!btn.closest('.year-block') && !btn.closest('.semester-block')) btn.innerText = window.languagePack.addYear;
         if (btn.closest('.year-block')) btn.innerText = window.languagePack.addSemester;
